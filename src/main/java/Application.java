@@ -8,15 +8,15 @@ public class Application {
 
         EmployeeDao employeeDao = new EmployeeDaoImpl();
 
-        employeeDao.createOrUpdateEmployee(new Employee("Andrei", "Andreev","male",29,3));
+        employeeDao.createOrUpdateEmployee(new Employee("Andrei", "Andreev","male",29,3l));
 
-        employeeDao.createOrUpdateEmployee(new Employee(14,"Dmitrii", "Lunev","male",32,1));
+        employeeDao.createOrUpdateEmployee(new Employee(24l,"Andrei", "Andreev","male",28,3l));
 
-        System.out.println(employeeDao.getEmployeeById(3));
+        System.out.println(employeeDao.getEmployeeById(3l));
 
         employeeDao.getAllEmployeeList().forEach(employee -> System.out.println(employee));
 
-        employeeDao.deleteEmployee(new Employee(5,"Alex", "Alexeev","male",21,2));
+        employeeDao.deleteEmployee(new Employee(24l,"Andrei", "Andreev","male",28,3l));
 
         employeeDao.getAllEmployeeList().forEach(employee -> System.out.println(employee));
     }

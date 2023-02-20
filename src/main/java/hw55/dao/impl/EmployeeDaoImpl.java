@@ -6,11 +6,10 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import hw55.config.HibernateSessionFactoryUtil;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class EmployeeDaoImpl implements EmployeeDao {
-
 
     @Override
     public void createOrUpdateEmployee(Employee employee) {
@@ -22,19 +21,17 @@ public class EmployeeDaoImpl implements EmployeeDao {
     }
 
     @Override
-    public Employee getEmployeeById(int id) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Employee.class, id);
+    public Optional<Employee> getEmployeeById(long id) {
+        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            return Optional.ofNullable(session.get(Employee.class, id));
+        }
     }
 
     @Override
     public List<Employee> getAllEmployeeList() {
-        List<Employee> employees = new ArrayList<>();
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()){
-            Transaction transaction = session.beginTransaction();
-            employees.addAll(session.createQuery("FROM Employee", Employee.class).list());
-            transaction.commit();
+            return session.createQuery("FROM Employee", Employee.class).list();
         }
-        return employees;
     }
 
     @Override
